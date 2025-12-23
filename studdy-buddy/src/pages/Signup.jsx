@@ -13,12 +13,15 @@ const Field = styled.div`
   gap: 8px;
 `;
 
+const FieldGrid = styled.div``;
+
 function SignUp() {
   const [name, setName] = useState("");
   const [about, setAbout] = useState("");
   const [skills, setSkills] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [phone, setPhone] = useState(null);
 
   function SignUpHandler(e) {
     e.preventDefault();
@@ -27,7 +30,7 @@ function SignUp() {
     <Row>
       <View>
         <form
-          className="p-4   sm:shadow rounded-2xl flex  flex-col gap-5 w-xl max-[500px]:w-screen max-[500px]:p-6 max-[500px]:shadow-0  overflow-clip"
+          className="p-4   sm:shadow rounded-2xl flex  flex-col w-5xl gap-5  max-[500px]:w-screen max-[500px]:p-6 max-[500px]:shadow-0  overflow-clip"
           onSubmit={SignUpHandler}
         >
           <Field className="text-center  block m-auto">
@@ -42,71 +45,86 @@ function SignUp() {
               </NavLink>
             </p>
           </Field>
-          <Field>
-            <label htmlFor="" className="text-2xl font-light text-gray-600">
-              Full name
-            </label>
-            <input
-              type="text"
-              placeholder="enter your full name"
-              className="px-4 py-6 border shadow rounded-2xl border-indigo-300 block w-full outline-indigo-800 placeholder:text-2xl"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-          </Field>
-          <Field>
-            <label htmlFor="" className="text-2xl font-light text-gray-600">
-              About you
-            </label>
-            <textarea
-              type="text"
-              placeholder="fill in with your password"
-              className="px-4 py-6 border shadow rounded-2xl border-indigo-300 block w-full outline-indigo-800 placeholder:text-2xl"
-              value={about}
-              onChange={(e) => setAbout(e.target.value)}
-            />
-          </Field>
-          <Field>
-            <label htmlFor="" className="text-2xl font-light text-gray-600">
-              Skills <span className="text-red-400">(seperate with comma)</span>
-            </label>
-            <input
-              type="text"
-              placeholder="'web developer', 'data analyst'"
-              className="px-4 py-6 border shadow rounded-2xl border-indigo-300 block w-full outline-indigo-800 placeholder:text-2xs"
-              value={skills}
-              onChange={(e) => setSkills(e.target.value)}
-            />
-          </Field>
-          <Field>
-            <label htmlFor="" className="text-2xl font-light text-gray-600">
-              Email
-            </label>
-            <input
-              type="email"
-              placeholder="fill in with your password"
-              className="px-4 py-6 border shadow rounded-2xl border-indigo-300 block w-full outline-indigo-800 placeholder:text-2xl"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </Field>
-          <Field>
-            <label htmlFor="" className="text-2xl font-light text-gray-600">
-              Password
-            </label>
-            <input
-              type="password"
-              placeholder="fill in with your password"
-              className="px-4 py-6 border shadow rounded-2xl border-indigo-300 block w-full outline-indigo-800 placeholder:text-2xl"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </Field>
+          <FieldGrid className="grid grid-cols-2 gap-2 max-[500px]:grid-cols-1">
+            <Field>
+              <label htmlFor="" className="text-2xl font-light text-gray-600">
+                Full name
+              </label>
+              <input
+                type="text"
+                placeholder="enter your full name"
+                className="px-4 py-6 border shadow rounded-2xl border-indigo-300 block w-full outline-indigo-800 placeholder:text-2xl"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+            </Field>
+            <Field>
+              <label htmlFor="" className="text-2xl font-light text-gray-600">
+                About you
+              </label>
+              <textarea
+                type="text"
+                placeholder="fill in with your password"
+                className="px-4 py-6 border shadow rounded-2xl border-indigo-300 block w-full outline-indigo-800 placeholder:text-2xl"
+                value={about}
+                onChange={(e) => setAbout(e.target.value)}
+              />
+            </Field>
+            <Field>
+              <label htmlFor="" className="text-2xl font-light text-gray-600">
+                Skills{" "}
+                <span className="text-red-400">(seperate with comma)</span>
+              </label>
+              <input
+                type="text"
+                placeholder="'web developer', 'data analyst'"
+                className="px-4 py-6 border shadow rounded-2xl border-indigo-300 block w-full outline-indigo-800 placeholder:text-2xs"
+                value={skills}
+                onChange={(e) => setSkills(e.target.value)}
+              />
+            </Field>
+            <Field>
+              <label htmlFor="" className="text-2xl font-light text-gray-600">
+                Email
+              </label>
+              <input
+                type="email"
+                placeholder="enter your email"
+                className="px-4 py-6 border shadow rounded-2xl border-indigo-300 block w-full outline-indigo-800 placeholder:text-2xl"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </Field>
+            <Field>
+              <label htmlFor="" className="text-2xl font-light text-gray-600">
+                Phone(whatsapp number)
+              </label>
+              <input
+                type="tel"
+                placeholder="233123456789"
+                className="px-4 py-6 border shadow rounded-2xl border-indigo-300 block w-full outline-indigo-800 placeholder:text-2xl"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+              />
+            </Field>
+            <Field>
+              <label htmlFor="" className="text-2xl font-light text-gray-600">
+                Password
+              </label>
+              <input
+                type="password"
+                placeholder="fill in with your password"
+                className="px-4 py-6 border shadow rounded-2xl border-indigo-300 block w-full outline-indigo-800 placeholder:text-2xl"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </Field>
 
-          <Button>
-            <span>Register</span>
-            <Send />
-          </Button>
+            <Button>
+              <span>Register</span>
+              <Send />
+            </Button>
+          </FieldGrid>
           <p className="text-center text-red-500 font-extrabold">
             Wrong credentials!!
           </p>

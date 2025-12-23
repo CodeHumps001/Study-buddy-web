@@ -10,6 +10,7 @@ import {
 import mockSessions from "../data";
 import { formatPostedTime, formatSessionDate } from "../helpers/formatDate";
 import styled from "styled-components";
+import { NavLink } from "react-router";
 
 const CardFooter = styled.div`
   display: flex;
@@ -23,36 +24,40 @@ export default function SessionCard() {
   return (
     <>
       {sessionsInfo.map((session) => (
-        <li className="flex flex-col shadow hover:shadow-lg rounded-3xl p-4 transition-all gap-2 w-xl">
-          <h2 className="text-2xl font-medium text-emerald-500 ">
-            {session.courseName}
-          </h2>
-          <p className="flex gap-1 text-gray-400">
-            <MapPin /> {session.location} | <TimerIcon />
-            {formatSessionDate(session.sessionDate)}
-          </p>
-          <p className="text-gray-800 text-lg font-medium">{session.reason}</p>
-          <CardFooter>
-            <p className="flex flex-col gap-2">
-              <span className="flex gap-1">
-                <Users /> {session.attendees.length}{" "}
-                {session.attendees.length > 1
-                  ? "Buddies "
-                  : session.attendees.length === 0
-                  ? "No Buddy yet"
-                  : "Buddy"}{" "}
-                Joined
-              </span>
-              <span className="flex gap-1">
-                <AlarmCheck />
-                {formatPostedTime(session.createdAt)}
-              </span>
+        <NavLink to={`/sessions/${session.id}`}>
+          <li className="flex flex-col shadow hover:shadow-lg rounded-3xl p-4 max-[500px]:p-2 transition-all gap-2 w-xl max-[500px]:w-xs">
+            <h2 className="text-2xl font-medium text-emerald-500 max-[500px]:text-lg">
+              {session.courseName}
+            </h2>
+            <p className="flex gap-1 text-gray-400 max-[500px]:text-sm">
+              <MapPin /> {session.location} | <TimerIcon />
+              {formatSessionDate(session.sessionDate)}
             </p>
-            <button className="px-6 py-2 text-lg font-medium text-white bg-linear-150 from-indigo-500 to-indigo-800 rounded-2xl hover:shadow-lg shadow-indigo-600 transition-all cursor-pointer">
-              Join Session
-            </button>
-          </CardFooter>
-        </li>
+            <p className="text-gray-800 text-lg font-medium max-[500px]:text-sm">
+              {session.reason}
+            </p>
+            <CardFooter>
+              <p className="flex flex-col gap-2 ">
+                <span className="flex gap-1 max-[500px]:text-xs">
+                  <Users /> {session.attendees.length}{" "}
+                  {session.attendees.length > 1
+                    ? "Buddies "
+                    : session.attendees.length === 0
+                    ? "Be the first to join"
+                    : "Buddy"}{" "}
+                  Joined
+                </span>
+                <span className="flex gap-1 max-[500px]:text-xs">
+                  <AlarmCheck />
+                  {formatPostedTime(session.createdAt)}
+                </span>
+              </p>
+              <button className="px-6 text-sm font-bold  text-white bg-linear-150 from-indigo-800 to-indigo-700 rounded-sm hover:shadow-lg shadow-indigo-600 transition-all cursor-pointer max-[500px]:text-sm max-[500px]:px-4 max-[500px]:py-1">
+                View details
+              </button>
+            </CardFooter>
+          </li>
+        </NavLink>
       ))}
     </>
   );

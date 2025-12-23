@@ -6,6 +6,7 @@ import SessionProfile from "./pages/SessionProfile";
 import { BrowserRouter, Routes, Route } from "react-router";
 import HomepageLayout from "./pages/ui/HomepageLayout";
 import { LayoutProvider } from "./context/LayoutContext";
+import CreateSession from "./pages/CreateSession";
 // import GlobalStyles from "./styles/GlobalStyles";
 
 function App() {
@@ -14,7 +15,6 @@ function App() {
       {/* <GlobalStyles /> */}
       <BrowserRouter>
         <Routes>
-          <Route index element={<Homepage />} />
           <Route
             element={
               <LayoutProvider>
@@ -22,8 +22,10 @@ function App() {
               </LayoutProvider>
             }
           >
-            <Route path="homepage" element={<Homepage />} />
+            <Route index element={<Homepage />} />
+            <Route path="feed" element={<Homepage />} />
             <Route path="sessions/:id" element={<SessionProfile />} />
+            <Route path="session/create" element={<CreateSession />} />
           </Route>
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<SignUp />} />

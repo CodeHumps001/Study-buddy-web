@@ -65,10 +65,7 @@ function Login() {
             />
           </Field>
 
-          <Button>
-            <span>Login</span>
-            <Send />
-          </Button>
+          <Button></Button>
           <p className="text-center text-red-500 font-extrabold">
             Wrong credentials!!
           </p>

@@ -33,7 +33,7 @@ export default function Sidebar() {
       </Avarta>
       <Details>
         <h3 className="bg-linear-to-br from-pink-400 to-indigo-700 text-transparent bg-clip-text text-2xl ">
-          name
+          Name
         </h3>
         <h1>Yaw fosu</h1>
       </Details>

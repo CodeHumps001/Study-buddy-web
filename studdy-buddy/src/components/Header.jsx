@@ -1,6 +1,14 @@
-import { CodeSquare, LucideCode2, MenuIcon } from "lucide-react";
+import {
+  Clipboard,
+  CodeSquare,
+  LucideCode2,
+  MenuIcon,
+  Plus,
+  User,
+} from "lucide-react";
 import styled from "styled-components";
 import { useLayout } from "../context/LayoutContext";
+import { NavLink } from "react-router";
 
 const HeaderTag = styled.header`
   grid-column: 1/-1;
@@ -9,16 +17,25 @@ const HeaderTag = styled.header`
 export default function Header() {
   const { isHide, setIshide } = useLayout();
   return (
-    <HeaderTag className="shadow flex justify-between items-center px-6">
-      <div className="flex gap-2 text-3xl items-center font-bold text-shadow-lg h cursor-pointer transition-all  bg-linear-to-br from-pink-400 to-indigo-500 text-transparent bg-clip-text ">
-        <LucideCode2 color="#4338ca" strokeWidth={4} /> <span>eizyConnect</span>
-      </div>
-      <span
-        className=" rounded-4xl  flex justify-center items-center cursor-pointer transition-all hover:shadow-lg"
-        onClick={() => setIshide(!isHide)}
+    <HeaderTag className=" flex justify-between items-center px-6">
+      <NavLink
+        to="/"
+        className="flex gap-2 text-3xl items-center font-bold text-shadow-lg h cursor-pointer transition-all  bg-linear-to-br from-pink-400 to-indigo-500 text-transparent bg-clip-text "
       >
-        <MenuIcon color="#4338ca" />
-      </span>
+        <LucideCode2 color="#4338ca" strokeWidth={4} /> <span>eizyConnect</span>
+      </NavLink>
+      <div className="flex  justify-center items-center gap-2">
+        <NavLink to="/session/create">
+          <Plus />
+        </NavLink>
+        <span
+          className=" rounded-4xl  flex justify-center items-center bg-gray-950 cursor-pointer transition-all shadow-lg gap-2 p-2 "
+          onClick={() => setIshide(!isHide)}
+        >
+          <h1 className="text-sm font-bold text-gray-100  ">Welcome, Yaw</h1>
+          <User color="#4338ca" />
+        </span>
+      </div>
     </HeaderTag>
   );
 }
