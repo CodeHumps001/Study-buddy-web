@@ -42,7 +42,7 @@ export default function CreateSession() {
       },
       {
         onSuccess: () => {
-          navigate("/feed");
+          navigate("/");
         },
       }
     );

@@ -27,7 +27,7 @@ function SignUp() {
 
   async function SignUpHandler(e) {
     e.preventDefault();
-    signup({ name, email, password, phone, about, skills });
+    signup({ email, password, name, phone, about, skills });
   }
 
   return (
