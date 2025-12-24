@@ -64,7 +64,7 @@ const SessionProfile = () => {
       <nav className="sticky top-0 z-10 bg-white/80 backdrop-blur-md border-b border-slate-100">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           <NavLink
-            to="/feed"
+            to="/"
             className="flex items-center gap-2 text-slate-600 hover:text-[#5D3FD3] font-semibold transition-all group"
           >
             <ArrowLeft
