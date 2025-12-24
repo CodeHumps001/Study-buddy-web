@@ -17,10 +17,10 @@ const HeaderTag = styled.header`
 export default function Header() {
   const { isHide, setIshide } = useLayout();
   return (
-    <HeaderTag className=" flex justify-between items-center px-6">
+    <HeaderTag className=" flex justify-between items-center px-6 max-[500px]:justify-end">
       <NavLink
         to="/"
-        className="flex gap-2 text-3xl items-center font-bold text-shadow-lg h cursor-pointer transition-all  bg-linear-to-br from-pink-400 to-indigo-500 text-transparent bg-clip-text "
+        className="flex gap-2 text-3xl items-center font-bold text-shadow-lg h cursor-pointer transition-all  bg-linear-to-br from-pink-400 to-indigo-500 text-transparent bg-clip-text max-[500px]:hidden "
       >
         <LucideCode2 color="#4338ca" strokeWidth={4} /> <span>eizyConnect</span>
       </NavLink>
