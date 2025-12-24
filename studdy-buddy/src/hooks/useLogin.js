@@ -22,7 +22,7 @@ export function useLogin() {
       queryClient.setQueryData(["user-profile"], user);
 
       toast.success(`Welcome back!`);
-      navigate("/feed", { replace: true });
+      navigate("/", { replace: true });
     },
     onError: (err) => {
       toast.error(err.message);

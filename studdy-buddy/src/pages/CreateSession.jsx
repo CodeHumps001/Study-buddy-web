@@ -51,7 +51,7 @@ export default function CreateSession() {
   return (
     <div className="bg-gray-50 flex flex-col gap-4 justify-center items-center min-h-full py-10 px-4">
       <NavLink
-        to="/feed"
+        to="/"
         className="flex hover:underline text-lg md:text-xl justify-center items-center gap-2"
       >
         <ArrowBigLeftDash />
