@@ -1,10 +1,11 @@
-import { Send } from "lucide-react";
+import { Send, Loader2 } from "lucide-react"; // Added Loader2 for better UX
 import { useState } from "react";
-import { NavLink } from "react-router";
+import { NavLink, useNavigate } from "react-router"; // Added useNavigate
 import styled from "styled-components";
 import Button from "../components/Button";
 import Row from "../components/Row";
 import View from "../components/View";
+import { useSignup } from "../hooks/useSignup";
 
 const Field = styled.div`
   display: flex;
@@ -15,22 +16,24 @@ const Field = styled.div`
 const FieldGrid = styled.div``;
 
 function SignUp() {
+  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [about, setAbout] = useState("");
   const [skills, setSkills] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
+  const { signup, isLoading } = useSignup();
 
-  function SignUpHandler(e) {
+  async function SignUpHandler(e) {
     e.preventDefault();
+    signup({ name, email, password, phone, about, skills });
   }
 
   return (
     <Row>
       <View>
         <form
-          /* Changed w-5xl to w-full max-w-5xl and added responsive padding */
           className="p-4 md:p-8 sm:shadow rounded-2xl flex flex-col w-full max-w-4xl gap-5 overflow-hidden"
           onSubmit={SignUpHandler}
         >
@@ -50,7 +53,6 @@ function SignUp() {
             </p>
           </Field>
 
-          {/* Grid: 1 column on mobile, 2 columns on tablets/desktop */}
           <FieldGrid className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
             <Field>
               <label className="text-lg md:text-2xl font-light text-gray-600">
@@ -58,6 +60,7 @@ function SignUp() {
               </label>
               <input
                 type="text"
+                required
                 placeholder="enter your full name"
                 className="px-4 py-3 md:py-6 border shadow rounded-2xl border-indigo-300 block w-full outline-indigo-800 placeholder:text-lg md:placeholder:text-2xl"
                 value={name}
@@ -99,6 +102,7 @@ function SignUp() {
               </label>
               <input
                 type="email"
+                required
                 placeholder="enter your email"
                 className="px-4 py-3 md:py-6 border shadow rounded-2xl border-indigo-300 block w-full outline-indigo-800 placeholder:text-lg md:placeholder:text-2xl"
                 value={email}
@@ -112,6 +116,7 @@ function SignUp() {
               </label>
               <input
                 type="tel"
+                required
                 placeholder="233123456789"
                 className="px-4 py-3 md:py-6 border shadow rounded-2xl border-indigo-300 block w-full outline-indigo-800 placeholder:text-lg md:placeholder:text-2xl"
                 value={phone}
@@ -125,6 +130,7 @@ function SignUp() {
               </label>
               <input
                 type="password"
+                required
                 placeholder="choose a password"
                 className="px-4 py-3 md:py-6 border shadow rounded-2xl border-indigo-300 block w-full outline-indigo-800 placeholder:text-lg md:placeholder:text-2xl"
                 value={password}
@@ -132,18 +138,31 @@ function SignUp() {
               />
             </Field>
 
-            {/* Button spans full width on mobile, or stays in grid on desktop */}
             <div className="md:col-span-2 mt-4">
-              <Button className="w-full flex justify-center items-center gap-2 py-4">
-                <span>Register</span>
-                <Send size={18} />
+              <Button
+                disabled={isLoading}
+                className="w-full flex justify-center items-center gap-2 py-4"
+              >
+                {isLoading ? (
+                  <>
+                    <Loader2 className="animate-spin" size={18} />
+                    <span>Creating Account...</span>
+                  </>
+                ) : (
+                  <>
+                    <span>Register</span>
+                    <Send size={18} />
+                  </>
+                )}
               </Button>
             </div>
           </FieldGrid>
 
-          <p className="text-center text-red-500 font-bold text-sm">
-            Something went wrong. Please check your details.
-          </p>
+          {errorMsg && (
+            <p className="text-center text-red-500 font-bold text-sm animate-pulse">
+              {errorMsg}
+            </p>
+          )}
         </form>
       </View>
     </Row>

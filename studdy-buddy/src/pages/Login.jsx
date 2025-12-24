@@ -1,10 +1,13 @@
-import { Send } from "lucide-react";
+import { Send, Loader2 } from "lucide-react";
 import { useState } from "react";
 import { NavLink } from "react-router";
 import styled from "styled-components";
 import Button from "../components/Button";
 import Row from "../components/Row";
 import View from "../components/View";
+
+// 1. ADD THIS IMPORT (Adjust the path to where your hook lives)
+import { useLogin } from "../hooks/useLogin";
 
 const Field = styled.div`
   display: flex;
@@ -15,20 +18,24 @@ const Field = styled.div`
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const isDisabled = !email || !password; // Fixed logic to || so it disables if either is empty
+
+  // 2. The hook handles isLoading and the logic
+  const { login, isLoading } = useLogin();
+
+  const isDisabled = !email || !password || isLoading;
 
   function LoginHandler(e) {
     e.preventDefault();
+    if (!email || !password) return;
+
+    // 3. Trigger the mutation from your hook
+    login({ email, password });
   }
 
   return (
     <Row>
       <View>
         <form
-          /* 
-             Changed w-xl to max-w-lg and w-full.
-             Added px-6 for mobile so it doesn't touch screen edges.
-          */
           className="p-6 md:p-8 sm:shadow-lg rounded-3xl flex flex-col gap-6 w-full max-w-lg mx-auto"
           onSubmit={LoginHandler}
         >
@@ -59,10 +66,10 @@ function Login() {
               id="email"
               type="email"
               placeholder="Enter your email"
-              /* Adjusted padding and placeholder size for mobile */
               className="px-4 py-4 md:py-6 border shadow-sm rounded-2xl border-indigo-300 block w-full outline-indigo-800 placeholder:text-lg md:placeholder:text-2xl"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              required
             />
           </Field>
 
@@ -80,21 +87,26 @@ function Login() {
               className="px-4 py-4 md:py-6 border shadow-sm rounded-2xl border-indigo-300 block w-full outline-indigo-800 placeholder:text-lg md:placeholder:text-2xl"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              required
             />
           </Field>
 
           <Button
             disabled={isDisabled}
-            className="flex justify-center items-center gap-2"
+            className="flex justify-center items-center gap-2 py-4"
           >
-            <span>Login</span>
-            <Send size={20} />
+            {isLoading ? (
+              <>
+                <Loader2 className="animate-spin" size={20} />
+                <span>Logging in...</span>
+              </>
+            ) : (
+              <>
+                <span>Login</span>
+                <Send size={20} />
+              </>
+            )}
           </Button>
-
-          {/* Conditional rendering for error (optional) */}
-          <p className="text-center text-red-500 font-bold text-sm">
-            Wrong credentials!!
-          </p>
         </form>
       </View>
     </Row>
