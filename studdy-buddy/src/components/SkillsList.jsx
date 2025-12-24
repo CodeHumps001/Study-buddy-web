@@ -9,7 +9,7 @@ export default function SkillsList({ skills }) {
     <>
       {skills.map((skill, i) => (
         <Li
-          className="p-3 rounded-3xl shadow  inline-block  bg-gray-800 text-white font-bold"
+          className="p-3 rounded-3xl shadow  inline-block  bg-gray-700 text-white font-bold"
           key={i}
         >
           {skill}
