@@ -46,7 +46,7 @@ export default function Sidebar() {
   )}&background=5D3FD3&color=fff&bold=true&size=150`;
 
   return (
-    <Aside className="shadow flex justify-start items-center flex-col gap-4 rounded-2xl bg-white">
+    <Aside className="shadow flex justify-start items-center flex-col gap-4 rounded-2xl bg-white z-50">
       {/* 2. Update the Avatar container to use the dynamic source */}
       <Avarta className="bg-gray-100 shadow-lg flex justify-center items-center overflow-hidden border-4 border-indigo-50 mt-2">
         <img
@@ -92,7 +92,7 @@ export default function Sidebar() {
         <h4 className="bg-gradient-to-br from-pink-400 to-indigo-800 text-transparent bg-clip-text text-xs font-bold uppercase tracking-widest mb-2">
           Skills
         </h4>
-        <ul className="flex flex-wrap gap-1 justify-start max-w-full">
+        <ul className="flex flex-wrap gap-1 ">
           <SkillsList skills={user.skills || []} />
         </ul>
       </Details>
