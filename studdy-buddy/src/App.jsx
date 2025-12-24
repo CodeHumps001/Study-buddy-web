@@ -56,7 +56,7 @@ function App() {
             }
           >
             <Route index element={<Homepage />} />
-            <Route path="feed" element={<Homepage />} />
+            <Route path="/" element={<Homepage />} />
             <Route path="sessions/:id" element={<SessionProfile />} />
             <Route path="session/create" element={<CreateSession />} />
           </Route>
