@@ -8,33 +8,29 @@ export function useSignup() {
 
   const { mutate: signup, isLoading } = useMutation({
     mutationFn: async ({ email, password, name, phone, about, skills }) => {
-      // 1. Auth Signup
-      const { data: authData, error: authError } = await supabase.auth.signUp({
+      // Create the skills array here
+      const skillsArray = skills
+        .split(",")
+        .map((s) => s.trim())
+        .filter(Boolean);
+
+      // 1. Auth Signup ONLY
+      const { data, error } = await supabase.auth.signUp({
         email,
         password,
-      });
-
-      if (authError) throw new Error(authError.message);
-
-      // 2. Profile Creation
-      if (authData.user) {
-        const skillsArray = skills
-          .split(",")
-          .map((s) => s.trim())
-          .filter(Boolean);
-
-        const { error: profileError } = await supabase.from("profiles").insert([
-          {
-            id: authData.user.id,
+        options: {
+          // Pass all extra info here so the TRIGGER can see it
+          data: {
             full_name: name,
             whatsapp_number: phone,
             about_me: about,
             skills: skillsArray,
           },
-        ]);
+        },
+      });
 
-        if (profileError) throw new Error(profileError.message);
-      }
+      if (error) throw new Error(error.message);
+      return data;
     },
     onSuccess: () => {
       toast.success("Account created! Check your email to verify.");
