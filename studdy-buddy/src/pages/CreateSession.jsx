@@ -1,7 +1,9 @@
 import styled from "styled-components";
 import Button from "../components/Button";
-import { ArrowBigLeftDash, Plus } from "lucide-react";
-import { NavLink } from "react-router";
+import { ArrowBigLeftDash, Plus, Loader2 } from "lucide-react";
+import { NavLink, useNavigate } from "react-router";
+import { useState } from "react";
+import { useCreateSession } from "../hooks/useCreateSession";
 
 const Field = styled.div`
   display: flex;
@@ -10,38 +12,69 @@ const Field = styled.div`
 `;
 
 export default function CreateSession() {
+  const navigate = useNavigate();
+  const { createSession, isLoading } = useCreateSession();
+
+  const [courseName, setCourseName] = useState("");
+  const [location, setLocation] = useState("");
+  const [sessionDate, setSessionDate] = useState("");
+  const [reason, setReason] = useState("");
+
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    // Debugging: If you don't see this in the console, the button type is the issue
+    console.log("FORM SUBMITTED", {
+      courseName,
+      location,
+      sessionDate,
+      reason,
+    });
+
+    if (!courseName || !location || !sessionDate || !reason) return;
+
+    createSession(
+      {
+        course_name: courseName,
+        location,
+        session_date: sessionDate,
+        reason,
+      },
+      {
+        onSuccess: () => {
+          navigate("/feed");
+        },
+      }
+    );
+  }
+
   return (
-    // Added horizontal padding (px-4) so the form doesn't touch screen edges on mobile
     <div className="bg-gray-50 flex flex-col gap-4 justify-center items-center min-h-full py-10 px-4">
       <NavLink
-        to="/"
+        to="/feed"
         className="flex hover:underline text-lg md:text-xl justify-center items-center gap-2"
       >
         <ArrowBigLeftDash />
         <span>Go back</span>
       </NavLink>
 
-      {/* text-center ensures header stays centered on small screens */}
-      <h1 className="text-3xl md:text-4xl font-bold bg-linear-to-br from-pink-400 to-indigo-500 text-transparent bg-clip-text text-center">
+      <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-br from-pink-400 to-indigo-500 text-transparent bg-clip-text text-center">
         Create a session
       </h1>
 
-      <p className="text-center text-gray-600 max-w-md">
-        Fill in the form to create your session and wait for the magic!
-      </p>
-
-      {/* 
-        Responsive Changes:
-        1. grid-cols-1 by default, md:grid-cols-2 for desktop.
-        2. w-full for mobile, md:w-3xl for desktop.
-      */}
-      <form className="grid grid-cols-1 md:grid-cols-2 w-full md:w-3xl shadow-lg bg-white gap-4 p-4 md:p-6 rounded-2xl">
+      <form
+        onSubmit={handleSubmit}
+        className="grid grid-cols-1 md:grid-cols-2 w-full md:w-3xl shadow-lg bg-white gap-4 p-4 md:p-6 rounded-2xl"
+      >
         <Field>
           <label className="font-semibold">Course name</label>
           <input
             type="text"
+            required
+            value={courseName}
+            onChange={(e) => setCourseName(e.target.value)}
             placeholder="Enter course name"
-            className="p-2 rounded-xl border-indigo-900 border outline-indigo-800 placeholder:text-base md:placeholder:text-xl"
+            className="p-3 rounded-xl border-slate-200 border focus:border-indigo-500 outline-none transition-all"
           />
         </Field>
 
@@ -49,8 +82,11 @@ export default function CreateSession() {
           <label className="font-semibold">Location</label>
           <input
             type="text"
+            required
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
             placeholder="Where is this taking place"
-            className="p-2 rounded-xl border-indigo-900 border outline-indigo-800 placeholder:text-base md:placeholder:text-xl"
+            className="p-3 rounded-xl border-slate-200 border focus:border-indigo-500 outline-none transition-all"
           />
         </Field>
 
@@ -58,24 +94,43 @@ export default function CreateSession() {
           <label className="font-semibold">Commence Date</label>
           <input
             type="datetime-local"
-            className="p-2 rounded-xl border-indigo-900 border outline-indigo-800"
+            required
+            value={sessionDate}
+            onChange={(e) => setSessionDate(e.target.value)}
+            className="p-3 rounded-xl border-slate-200 border focus:border-indigo-500 outline-none transition-all"
           />
         </Field>
 
-        {/* This field spans both columns on desktop, one column on mobile */}
         <Field className="md:col-span-2">
           <label className="font-semibold">About session</label>
           <textarea
             rows="4"
+            required
+            value={reason}
+            onChange={(e) => setReason(e.target.value)}
             placeholder="Give a little description about this session"
-            className="p-2 rounded-xl border-indigo-900 border outline-indigo-800 placeholder:text-base md:placeholder:text-xl"
+            className="p-3 rounded-xl border-slate-200 border focus:border-indigo-500 outline-none transition-all"
           />
         </Field>
 
         <div className="md:col-span-2 mt-2">
-          <Button className="w-full flex justify-center items-center gap-2">
-            <span>Create Session</span>
-            <Plus size={20} />
+          {/* We MUST pass type="submit" here */}
+          <Button
+            type="submit"
+            disabled={isLoading}
+            className="w-full flex justify-center items-center gap-2 py-4 bg-[#5D3FD3] text-white rounded-xl font-bold hover:bg-[#4B32A7] disabled:bg-slate-300 transition-all"
+          >
+            {isLoading ? (
+              <>
+                <Loader2 className="animate-spin" size={20} />
+                <span>Creating...</span>
+              </>
+            ) : (
+              <>
+                <span>Create Session</span>
+                <Plus size={20} />
+              </>
+            )}
           </Button>
         </div>
       </form>

@@ -10,6 +10,7 @@ import CreateSession from "./pages/CreateSession";
 import { Toaster } from "react-hot-toast";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import ProtectedRoute from "./context/ProtectedRoute";
 // import GlobalStyles from "./styles/GlobalStyles";
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -47,9 +48,11 @@ function App() {
         <Routes>
           <Route
             element={
-              <LayoutProvider>
-                <HomepageLayout />
-              </LayoutProvider>
+              <ProtectedRoute>
+                <LayoutProvider>
+                  <HomepageLayout />
+                </LayoutProvider>
+              </ProtectedRoute>
             }
           >
             <Route index element={<Homepage />} />

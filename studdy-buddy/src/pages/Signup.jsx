@@ -157,12 +157,6 @@ function SignUp() {
               </Button>
             </div>
           </FieldGrid>
-
-          {errorMsg && (
-            <p className="text-center text-red-500 font-bold text-sm animate-pulse">
-              {errorMsg}
-            </p>
-          )}
         </form>
       </View>
     </Row>
